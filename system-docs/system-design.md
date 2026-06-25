@@ -998,9 +998,9 @@ Solid Queue handles asynchronous workloads in Kern.
 
 - **Authentication**: Built-in Rails 8 Authentication. Uses database-level email validation, secure password hashing with `BCrypt`, and a generator-derived sessions controller.
   - *Google OAuth*: Integrates via OmniAuth to obtain API access tokens for Google Calendar, storing encrypted tokens securely in `calendar_connections`.
-- **Authorization**: Pundit policies enforce strict tenant boundaries.
+- **Authorization**: Action Policy policies enforce strict tenant boundaries.
   - Every ActiveRecord query is scoped directly to the current operator: `Current.operator.commitments`.
-  - Pundit policies assert ownership constraints:
+  - Action Policy policies assert ownership constraints:
     ```ruby
     class CommitmentPolicy < ApplicationPolicy
       def update?

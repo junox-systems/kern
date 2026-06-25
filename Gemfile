@@ -42,8 +42,19 @@ gem "thruster", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 gem "image_processing", "~> 1.2"
 
+# uuid v7 pk on sqlite
 gem "sqlite_crypto", "~> 2.2"
 
+# authorization
+gem "action_policy", "~> 0.7"
+
+# unified notifier
+gem "active_delivery", "~> 1.2"
+
+# view components
+gem "view_component", "~> 4.12"
+# !later_analyze view components common patterns
+# gem "view_component-contrib", "~> 0.2"
 
 #### #### development #### #####
 
