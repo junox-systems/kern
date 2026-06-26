@@ -1,0 +1,25 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  category: one
+  title: MyString
+  description: MyText
+  context: MyText
+  capability: 1
+  estimate_minutes: 1
+  due_at: 2026-06-26 07:42:04
+  available_after: 2026-06-26 07:42:04
+  state: 1
+
+two:
+  user: two
+  category: two
+  title: MyString
+  description: MyText
+  context: MyText
+  capability: 1
+  estimate_minutes: 1
+  due_at: 2026-06-26 07:42:04
+  available_after: 2026-06-26 07:42:04
+  state: 1

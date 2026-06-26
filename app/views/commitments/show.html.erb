@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @commitment %>
+
+<div>
+  <%= link_to "Edit this commitment", edit_commitment_path(@commitment) %> |
+  <%= link_to "Back to commitments", commitments_path %>
+
+  <%= button_to "Destroy this commitment", @commitment, method: :delete %>
+</div>

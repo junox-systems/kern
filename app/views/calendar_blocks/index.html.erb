@@ -1,0 +1,16 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Calendar blocks" %>
+
+<h1>Calendar blocks</h1>
+
+<div id="calendar_blocks">
+  <% @calendar_blocks.each do |calendar_block| %>
+    <%= render calendar_block %>
+    <p>
+      <%= link_to "Show this calendar block", calendar_block %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New calendar block", new_calendar_block_path %>

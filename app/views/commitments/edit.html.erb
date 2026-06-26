@@ -1,0 +1,12 @@
+<% content_for :title, "Editing commitment" %>
+
+<h1>Editing commitment</h1>
+
+<%= render "form", commitment: @commitment %>
+
+<br>
+
+<div>
+  <%= link_to "Show this commitment", @commitment %> |
+  <%= link_to "Back to commitments", commitments_path %>
+</div>

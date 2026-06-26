@@ -1,0 +1,11 @@
+<% content_for :title, "New calendar block" %>
+
+<h1>New calendar block</h1>
+
+<%= render "form", calendar_block: @calendar_block %>
+
+<br>
+
+<div>
+  <%= link_to "Back to calendar blocks", calendar_blocks_path %>
+</div>

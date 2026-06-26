@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @calendar_block %>
+
+<div>
+  <%= link_to "Edit this calendar block", edit_calendar_block_path(@calendar_block) %> |
+  <%= link_to "Back to calendar blocks", calendar_blocks_path %>
+
+  <%= button_to "Destroy this calendar block", @calendar_block, method: :delete %>
+</div>
