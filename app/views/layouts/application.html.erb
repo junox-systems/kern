@@ -24,6 +24,11 @@
   </head>
 
   <body>
-    <%= yield %>
+    <% if authenticated? %>
+      <%= render "layouts/navigation" %>
+    <% end %>
+    <main class="container mx-auto px-4">
+      <%= yield %>
+    </main>
   </body>
 </html>

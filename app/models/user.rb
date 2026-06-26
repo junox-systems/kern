@@ -3,6 +3,8 @@ class User < ApplicationRecord
   has_many :sessions, dependent: :destroy
 
   normalizes :email_address, with: ->(e) { e.strip.downcase }
+  validates :email_address, presence: true, uniqueness: true
+  validates :name, presence: true
 
   has_many :categories, dependent: :destroy
   has_many :commitments, dependent: :destroy

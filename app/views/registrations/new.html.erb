@@ -1,0 +1,42 @@
+<div class="max-w-md mx-auto mt-10 p-6 bg-base-100 rounded shadow">
+  <h1 class="text-3xl font-bold mb-6">Sign up</h1>
+
+  <%= form_with(model: @user, url: registration_path, data: { turbo: false }) do |form| %>
+    <% if @user.errors.any? %>
+      <div class="text-error p-4 rounded mb-6 bg-error/10">
+        <h2 class="font-bold"><%= pluralize(@user.errors.count, "error") %> prohibited this account from being saved:</h2>
+        <ul class="list-disc ml-5 mt-2">
+          <% @user.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="mb-4">
+      <%= form.label :name, class: "block font-medium mb-1" %>
+      <%= form.text_field :name, class: "input input-bordered w-full", autofocus: true, required: true %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :email_address, "Email", class: "block font-medium mb-1" %>
+      <%= form.email_field :email_address, class: "input input-bordered w-full", required: true %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :password, class: "block font-medium mb-1" %>
+      <%= form.password_field :password, class: "input input-bordered w-full", required: true %>
+    </div>
+
+    <div class="mb-6">
+      <%= form.label :password_confirmation, "Confirm password", class: "block font-medium mb-1" %>
+      <%= form.password_field :password_confirmation, class: "input input-bordered w-full", required: true %>
+    </div>
+
+    <%= form.submit "Sign up", class: "btn btn-primary w-full" %>
+  <% end %>
+
+  <div class="mt-4 text-center">
+    Already have an account? <%= link_to "Log in", new_session_path, class: "link link-primary" %>
+  </div>
+</div>

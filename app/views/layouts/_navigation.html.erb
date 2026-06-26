@@ -1,0 +1,14 @@
+<div class="navbar bg-base-200 px-4 mb-6 shadow-sm">
+  <div class="flex-1">
+    <%= link_to "Kern", root_path, class: "btn btn-ghost normal-case text-xl font-bold" %>
+  </div>
+  <div class="flex-none">
+    <ul class="menu menu-horizontal px-1 gap-2">
+      <li><%= link_to "Commitments", commitments_path, class: "rounded-lg" %></li>
+      <li><%= link_to "Categories", categories_path, class: "rounded-lg" %></li>
+      <li><%= link_to "Calendar Blocks", calendar_blocks_path, class: "rounded-lg" %></li>
+      <li><%= link_to "Profile", profile_path, class: "rounded-lg" %></li>
+    </ul>
+    <%= button_to "Log out", session_path, method: :delete, class: "btn btn-outline btn-sm btn-error ml-4" %>
+  </div>
+</div>
