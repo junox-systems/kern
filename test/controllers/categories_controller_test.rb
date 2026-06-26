@@ -3,6 +3,7 @@ require "test_helper"
 class CategoriesControllerTest < ActionDispatch::IntegrationTest
   setup do
     @category = categories(:one)
+    sign_in_as(users(:one))
   end
 
   test "should get index" do
@@ -20,7 +21,7 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
       post categories_url, params: { category: { depth: @category.depth, description: @category.description, name: @category.name, parent_id: @category.parent_id, priority: @category.priority, user_id: @category.user_id, weekly_allocation_minutes: @category.weekly_allocation_minutes } }
     end
 
-    assert_redirected_to category_url(Category.last)
+    assert_redirected_to category_url(Category.order(:created_at).last)
   end
 
   test "should show category" do

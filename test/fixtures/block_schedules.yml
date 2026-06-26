@@ -5,21 +5,21 @@ one:
   calendar: one
   category: one
   capability: 1
-  start_time: 2026-06-26 07:42:18
-  end_time: 2026-06-26 07:42:18
-  days_of_week: 
+  start_time: "09:00:00"
+  end_time: "17:00:00"
+  days_of_week: [1, 2, 3, 4, 5]
   effective_from: 2026-06-26
   effective_until: 2026-06-26
-  active: false
+  active: true
 
 two:
   user: two
   calendar: two
   category: two
   capability: 1
-  start_time: 2026-06-26 07:42:18
-  end_time: 2026-06-26 07:42:18
-  days_of_week: 
+  start_time: "09:00:00"
+  end_time: "17:00:00"
+  days_of_week: [1, 2, 3, 4, 5]
   effective_from: 2026-06-26
   effective_until: 2026-06-26
-  active: false
+  active: true

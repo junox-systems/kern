@@ -2,18 +2,16 @@
 
 one:
   user: one
-  parent_id: MyString
-  name: MyString
-  description: MyText
+  name: Category One
+  description: Description one
   priority: 1
-  weekly_allocation_minutes: 1
-  depth: 1
+  weekly_allocation_minutes: 60
+  depth: 0
 
 two:
   user: two
-  parent_id: MyString
-  name: MyString
-  description: MyText
-  priority: 1
-  weekly_allocation_minutes: 1
-  depth: 1
+  name: Category Two
+  description: Description two
+  priority: 2
+  weekly_allocation_minutes: 120
+  depth: 0

@@ -2,8 +2,4 @@
 
 one:
   commitment: one
-  depends_on_id: MyString
-
-two:
-  commitment: two
-  depends_on_id: MyString
+  depends_on: three

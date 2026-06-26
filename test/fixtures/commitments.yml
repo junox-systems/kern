@@ -3,11 +3,11 @@
 one:
   user: one
   category: one
-  title: MyString
+  title: Commitment One
   description: MyText
   context: MyText
   capability: 1
-  estimate_minutes: 1
+  estimate_minutes: 60
   due_at: 2026-06-26 07:42:04
   available_after: 2026-06-26 07:42:04
   state: 1
@@ -15,11 +15,23 @@ one:
 two:
   user: two
   category: two
-  title: MyString
+  title: Commitment Two
   description: MyText
   context: MyText
   capability: 1
-  estimate_minutes: 1
+  estimate_minutes: 120
+  due_at: 2026-06-26 07:42:04
+  available_after: 2026-06-26 07:42:04
+  state: 1
+
+three:
+  user: one
+  category: one
+  title: Commitment Three
+  description: MyText
+  context: MyText
+  capability: 1
+  estimate_minutes: 30
   due_at: 2026-06-26 07:42:04
   available_after: 2026-06-26 07:42:04
   state: 1

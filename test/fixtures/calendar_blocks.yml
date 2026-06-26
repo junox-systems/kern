@@ -7,10 +7,10 @@ one:
   block_schedule: one
   capability: 1
   date: 2026-06-26
-  start_time: 2026-06-26 07:42:20
-  end_time: 2026-06-26 07:42:20
+  start_time: "10:00:00"
+  end_time: "11:00:00"
   block_type: 1
-  external_uid: MyString
+  external_uid: gcal-one
 
 two:
   user: two
@@ -19,7 +19,7 @@ two:
   block_schedule: two
   capability: 1
   date: 2026-06-26
-  start_time: 2026-06-26 07:42:20
-  end_time: 2026-06-26 07:42:20
+  start_time: "14:00:00"
+  end_time: "15:00:00"
   block_type: 1
-  external_uid: MyString
+  external_uid: gcal-two

@@ -3,6 +3,7 @@ require "test_helper"
 class CommitmentsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @commitment = commitments(:one)
+    sign_in_as(users(:one))
   end
 
   test "should get index" do
@@ -20,7 +21,7 @@ class CommitmentsControllerTest < ActionDispatch::IntegrationTest
       post commitments_url, params: { commitment: { available_after: @commitment.available_after, capability: @commitment.capability, category_id: @commitment.category_id, context: @commitment.context, description: @commitment.description, due_at: @commitment.due_at, estimate_minutes: @commitment.estimate_minutes, state: @commitment.state, title: @commitment.title, user_id: @commitment.user_id } }
     end
 
-    assert_redirected_to commitment_url(Commitment.last)
+    assert_redirected_to commitment_url(Commitment.order(:created_at).last)
   end
 
   test "should show commitment" do

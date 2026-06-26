@@ -3,6 +3,7 @@ require "test_helper"
 class CalendarBlocksControllerTest < ActionDispatch::IntegrationTest
   setup do
     @calendar_block = calendar_blocks(:one)
+    sign_in_as(users(:one))
   end
 
   test "should get index" do
@@ -17,10 +18,10 @@ class CalendarBlocksControllerTest < ActionDispatch::IntegrationTest
 
   test "should create calendar_block" do
     assert_difference("CalendarBlock.count") do
-      post calendar_blocks_url, params: { calendar_block: { block_schedule_id: @calendar_block.block_schedule_id, block_type: @calendar_block.block_type, calendar_id: @calendar_block.calendar_id, capability: @calendar_block.capability, category_id: @calendar_block.category_id, date: @calendar_block.date, end_time: @calendar_block.end_time, external_uid: @calendar_block.external_uid, start_time: @calendar_block.start_time, user_id: @calendar_block.user_id } }
+      post calendar_blocks_url, params: { calendar_block: { block_schedule_id: @calendar_block.block_schedule_id, block_type: @calendar_block.block_type, calendar_id: @calendar_block.calendar_id, capability: @calendar_block.capability, category_id: @calendar_block.category_id, date: @calendar_block.date, end_time: @calendar_block.end_time, external_uid: "new-unique-external-uid", start_time: @calendar_block.start_time, user_id: @calendar_block.user_id } }
     end
 
-    assert_redirected_to calendar_block_url(CalendarBlock.last)
+    assert_redirected_to calendar_block_url(CalendarBlock.order(:created_at).last)
   end
 
   test "should show calendar_block" do
