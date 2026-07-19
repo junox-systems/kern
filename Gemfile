@@ -43,7 +43,7 @@ gem "thruster", require: false
 gem "image_processing", "~> 1.2"
 
 # uuid v7 pk on sqlite
-gem "sqlite_crypto", "~> 2.2"
+gem "sqlite_crypto", "~> 2.3"
 
 # authorization
 gem "action_policy", "~> 0.7"
