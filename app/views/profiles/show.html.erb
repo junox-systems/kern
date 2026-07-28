@@ -1,12 +1,12 @@
 <div class="max-w-xl mx-auto mt-10 p-6 bg-base-100 rounded shadow-md">
   <h1 class="text-3xl font-bold mb-6 text-primary">Profile Settings</h1>
 
-  <%= form_with(model: @user, url: profile_path, method: :patch, data: { turbo: false }) do |form| %>
-    <% if @user.errors.any? %>
+  <%= form_with(model: @operator, url: profile_path, method: :patch, data: { turbo: false }) do |form| %>
+    <% if @operator.errors.any? %>
       <div class="text-error p-4 rounded mb-6 bg-error/10">
-        <h2 class="font-bold"><%= pluralize(@user.errors.count, "error") %> prohibited this profile from being saved:</h2>
+        <h2 class="font-bold"><%= pluralize(@operator.errors.count, "error") %> prohibited this profile from being saved:</h2>
         <ul class="list-disc ml-5 mt-2">
-          <% @user.errors.full_messages.each do |message| %>
+          <% @operator.errors.full_messages.each do |message| %>
             <li><%= message %></li>
           <% end %>
         </ul>

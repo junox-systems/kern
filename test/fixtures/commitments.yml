@@ -1,7 +1,7 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  user: one
+  operator: one
   category: one
   title: Commitment One
   description: MyText
@@ -13,7 +13,7 @@ one:
   state: 1
 
 two:
-  user: two
+  operator: two
   category: two
   title: Commitment Two
   description: MyText
@@ -25,7 +25,7 @@ two:
   state: 1
 
 three:
-  user: one
+  operator: one
   category: one
   title: Commitment Three
   description: MyText

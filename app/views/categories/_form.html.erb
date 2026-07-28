@@ -19,7 +19,7 @@
 
   <div>
     <%= form.label :parent_id, "Parent Category", class: "label text-sm font-medium" %>
-    <%= form.collection_select :parent_id, Current.user.categories.where.not(id: category.id), :id, :name,
+    <%= form.collection_select :parent_id, Current.operator.categories.where.not(id: category.id), :id, :name,
           { include_blank: "None (Root Category)" },
           { class: "select select-bordered w-full" } %>
   </div>

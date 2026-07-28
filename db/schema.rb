@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_26_052517) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_28_125411) do
   create_table "block_schedules", id: uuid, force: :cascade do |t|
     t.boolean "active", default: true, null: false
     t.string "calendar_id", limit: 36, null: false
@@ -21,13 +21,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_26_052517) do
     t.date "effective_from"
     t.date "effective_until"
     t.time "end_time", null: false
+    t.string "operator_id", limit: 36, null: false
     t.time "start_time", null: false
     t.datetime "updated_at", null: false
-    t.string "user_id", limit: 36, null: false
     t.index ["calendar_id"], name: "index_block_schedules_on_calendar_id"
     t.index ["category_id"], name: "index_block_schedules_on_category_id"
-    t.index ["user_id", "active"], name: "index_block_schedules_on_user_id_and_active"
-    t.index ["user_id"], name: "index_block_schedules_on_user_id"
+    t.index ["operator_id", "active"], name: "index_block_schedules_on_operator_id_and_active"
+    t.index ["operator_id"], name: "index_block_schedules_on_operator_id"
   end
 
   create_table "calendar_blocks", id: uuid, force: :cascade do |t|
@@ -40,17 +40,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_26_052517) do
     t.date "date", null: false
     t.time "end_time", null: false
     t.string "external_uid"
+    t.string "operator_id", limit: 36, null: false
     t.time "start_time", null: false
     t.datetime "updated_at", null: false
-    t.string "user_id", limit: 36, null: false
     t.index ["block_schedule_id"], name: "index_calendar_blocks_on_block_schedule_id"
     t.index ["calendar_id", "date"], name: "index_calendar_blocks_on_calendar_id_and_date"
     t.index ["calendar_id"], name: "index_calendar_blocks_on_calendar_id"
     t.index ["category_id", "date"], name: "index_calendar_blocks_on_category_id_and_date"
     t.index ["category_id"], name: "index_calendar_blocks_on_category_id"
     t.index ["external_uid"], name: "index_calendar_blocks_on_external_uid", unique: true
-    t.index ["user_id", "date"], name: "index_calendar_blocks_on_user_id_and_date"
-    t.index ["user_id"], name: "index_calendar_blocks_on_user_id"
+    t.index ["operator_id", "date"], name: "index_calendar_blocks_on_operator_id_and_date"
+    t.index ["operator_id"], name: "index_calendar_blocks_on_operator_id"
   end
 
   create_table "calendar_connections", id: uuid, force: :cascade do |t|
@@ -68,9 +68,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_26_052517) do
   create_table "calendars", id: uuid, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "name", null: false
+    t.string "operator_id", limit: 36, null: false
     t.datetime "updated_at", null: false
-    t.string "user_id", limit: 36, null: false
-    t.index ["user_id"], name: "index_calendars_on_user_id"
+    t.index ["operator_id"], name: "index_calendars_on_operator_id"
   end
 
   create_table "categories", id: uuid, force: :cascade do |t|
@@ -78,14 +78,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_26_052517) do
     t.integer "depth", default: 0, null: false
     t.text "description"
     t.string "name", null: false
+    t.string "operator_id", limit: 36, null: false
     t.string "parent_id", limit: 36
     t.integer "priority", default: 0, null: false
     t.datetime "updated_at", null: false
-    t.string "user_id", limit: 36, null: false
     t.integer "weekly_allocation_minutes", default: 0, null: false
+    t.index ["operator_id", "priority"], name: "index_categories_on_operator_id_and_priority"
+    t.index ["operator_id"], name: "index_categories_on_operator_id"
     t.index ["parent_id"], name: "index_categories_on_parent_id"
-    t.index ["user_id", "priority"], name: "index_categories_on_user_id_and_priority"
-    t.index ["user_id"], name: "index_categories_on_user_id"
   end
 
   create_table "commitment_dependencies", id: uuid, force: :cascade do |t|
@@ -107,17 +107,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_26_052517) do
     t.text "description"
     t.datetime "due_at"
     t.integer "estimate_minutes"
+    t.string "operator_id", limit: 36, null: false
     t.integer "state", default: 0, null: false
     t.string "title", null: false
     t.datetime "updated_at", null: false
-    t.string "user_id", limit: 36, null: false
     t.index ["available_after"], name: "index_commitments_on_available_after"
     t.index ["category_id", "state"], name: "index_commitments_on_category_id_and_state"
     t.index ["category_id"], name: "index_commitments_on_category_id"
     t.index ["due_at"], name: "index_commitments_on_due_at"
-    t.index ["user_id", "category_id", "state"], name: "index_commitments_on_user_id_and_category_id_and_state"
-    t.index ["user_id", "state"], name: "index_commitments_on_user_id_and_state"
-    t.index ["user_id"], name: "index_commitments_on_user_id"
+    t.index ["operator_id", "category_id", "state"], name: "index_commitments_on_operator_id_and_category_id_and_state"
+    t.index ["operator_id", "state"], name: "index_commitments_on_operator_id_and_state"
+    t.index ["operator_id"], name: "index_commitments_on_operator_id"
   end
 
   create_table "operator_events", id: uuid, force: :cascade do |t|
@@ -125,49 +125,49 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_26_052517) do
     t.datetime "created_at", null: false
     t.integer "event_type", default: 0, null: false
     t.json "metadata"
+    t.string "operator_id", limit: 36, null: false
     t.datetime "updated_at", null: false
-    t.string "user_id", limit: 36, null: false
     t.index ["commitment_id", "created_at"], name: "index_operator_events_on_commitment_id_and_created_at"
     t.index ["commitment_id"], name: "index_operator_events_on_commitment_id"
-    t.index ["user_id", "event_type", "created_at"], name: "index_operator_events_on_user_id_and_event_type_and_created_at"
-    t.index ["user_id"], name: "index_operator_events_on_user_id"
+    t.index ["operator_id", "event_type", "created_at"], name: "idx_on_operator_id_event_type_created_at_22fbbb21f9"
+    t.index ["operator_id"], name: "index_operator_events_on_operator_id"
   end
 
-  create_table "sessions", id: uuid, force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.string "ip_address"
-    t.datetime "updated_at", null: false
-    t.string "user_agent"
-    t.string "user_id", limit: 36, null: false
-    t.index ["user_id"], name: "index_sessions_on_user_id"
-  end
-
-  create_table "users", id: uuid, force: :cascade do |t|
+  create_table "operators", id: uuid, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "email_address", null: false
     t.string "name"
     t.string "password_digest", null: false
     t.string "timezone", default: "UTC", null: false
     t.datetime "updated_at", null: false
-    t.index ["email_address"], name: "index_users_on_email_address", unique: true
+    t.index ["email_address"], name: "index_operators_on_email_address", unique: true
+  end
+
+  create_table "sessions", id: uuid, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "ip_address"
+    t.string "operator_id", limit: 36, null: false
+    t.datetime "updated_at", null: false
+    t.string "user_agent"
+    t.index ["operator_id"], name: "index_sessions_on_operator_id"
   end
 
   add_foreign_key "block_schedules", "calendars"
   add_foreign_key "block_schedules", "categories"
-  add_foreign_key "block_schedules", "users"
+  add_foreign_key "block_schedules", "operators"
   add_foreign_key "calendar_blocks", "block_schedules"
   add_foreign_key "calendar_blocks", "calendars"
   add_foreign_key "calendar_blocks", "categories"
-  add_foreign_key "calendar_blocks", "users"
+  add_foreign_key "calendar_blocks", "operators"
   add_foreign_key "calendar_connections", "calendars"
-  add_foreign_key "calendars", "users"
+  add_foreign_key "calendars", "operators"
   add_foreign_key "categories", "categories", column: "parent_id"
-  add_foreign_key "categories", "users"
+  add_foreign_key "categories", "operators"
   add_foreign_key "commitment_dependencies", "commitments"
   add_foreign_key "commitment_dependencies", "commitments", column: "depends_on_id"
   add_foreign_key "commitments", "categories"
-  add_foreign_key "commitments", "users"
+  add_foreign_key "commitments", "operators"
   add_foreign_key "operator_events", "commitments"
-  add_foreign_key "operator_events", "users"
-  add_foreign_key "sessions", "users"
+  add_foreign_key "operator_events", "operators"
+  add_foreign_key "sessions", "operators"
 end

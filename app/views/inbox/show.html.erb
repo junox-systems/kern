@@ -15,7 +15,7 @@
         <%= form_with model: @current, url: commitment_path(@current), method: :patch, class: "mt-4 space-y-4" do |f| %>
           <div>
             <%= f.label :category_id, "Category", class: "label text-sm font-medium" %>
-            <%= f.collection_select :category_id, Current.user.categories, :id, :name,
+            <%= f.collection_select :category_id, Current.operator.categories, :id, :name,
                   { include_blank: "Select category..." },
                   { class: "select select-bordered w-full" } %>
           </div>

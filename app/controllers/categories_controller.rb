@@ -3,7 +3,7 @@ class CategoriesController < ApplicationController
 
   # GET /categories
   def index
-    @categories = Current.user.categories
+    @categories = Current.operator.categories
   end
 
   # GET /categories/1
@@ -13,7 +13,7 @@ class CategoriesController < ApplicationController
 
   # GET /categories/new
   def new
-    @category = Current.user.categories.build
+    @category = Current.operator.categories.build
   end
 
   # GET /categories/1/edit
@@ -23,7 +23,7 @@ class CategoriesController < ApplicationController
 
   # POST /categories
   def create
-    @category = Current.user.categories.build(category_params)
+    @category = Current.operator.categories.build(category_params)
 
     respond_to do |format|
       if @category.save
@@ -65,7 +65,7 @@ class CategoriesController < ApplicationController
   private
 
   def set_category
-    @category = Current.user.categories.find(params.expect(:id))
+    @category = Current.operator.categories.find(params.expect(:id))
   end
 
   def category_params

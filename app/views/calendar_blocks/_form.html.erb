@@ -14,14 +14,14 @@
 
   <div>
     <%= form.label :calendar_id, "Calendar", class: "label text-sm font-medium" %>
-    <%= form.collection_select :calendar_id, Current.user.calendars, :id, :name,
+    <%= form.collection_select :calendar_id, Current.operator.calendars, :id, :name,
           {},
           { class: "select select-bordered w-full" } %>
   </div>
 
   <div>
     <%= form.label :category_id, "Category", class: "label text-sm font-medium" %>
-    <%= form.collection_select :category_id, Current.user.categories, :id, :name,
+    <%= form.collection_select :category_id, Current.operator.categories, :id, :name,
           { include_blank: "Select category..." },
           { class: "select select-bordered w-full" } %>
   </div>

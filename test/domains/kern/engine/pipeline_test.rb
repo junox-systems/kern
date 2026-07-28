@@ -4,13 +4,13 @@ require "test_helper"
 
 class Kern::Engine::PipelineTest < ActiveSupport::TestCase
   setup do
-    @user = users(:one)
+    @operator = operators(:one)
     @category = categories(:one)
   end
 
   test "produces a recommendation for a ready commitment" do
     # Ensure we have a ready commitment
-    commitment = @user.commitments.create!(
+    commitment = @operator.commitments.create!(
       title: "Write proposal",
       category: @category,
       state: :ready,
@@ -20,9 +20,9 @@ class Kern::Engine::PipelineTest < ActiveSupport::TestCase
     )
 
     # Create a calendar block for today with matching capability
-    calendar = @user.calendars.first || @user.calendars.create!(name: "Default")
+    calendar = @operator.calendars.first || @operator.calendars.create!(name: "Default")
     calendar.calendar_blocks.create!(
-      user: @user,
+      operator: @operator,
       category: @category,
       capability: :light,
       date: Date.current,
@@ -31,7 +31,7 @@ class Kern::Engine::PipelineTest < ActiveSupport::TestCase
       block_type: :manual
     )
 
-    recommendations = Kern::Engine::Pipeline.run(operator: @user, current_time: Time.current)
+    recommendations = Kern::Engine::Pipeline.run(operator: @operator, current_time: Time.current)
 
     assert recommendations.any?, "Pipeline should produce at least one recommendation"
 
@@ -42,27 +42,27 @@ class Kern::Engine::PipelineTest < ActiveSupport::TestCase
   end
 
   test "returns empty when no ready commitments exist" do
-    @user.commitments.update_all(state: :done)
+    @operator.commitments.update_all(state: :done)
 
-    recommendations = Kern::Engine::Pipeline.run(operator: @user, current_time: Time.current)
+    recommendations = Kern::Engine::Pipeline.run(operator: @operator, current_time: Time.current)
 
     assert_empty recommendations
   end
 
   test "excludes deferred commitments" do
-    @user.commitments.ready.update_all(available_after: 3.days.from_now)
+    @operator.commitments.ready.update_all(available_after: 3.days.from_now)
 
-    recommendations = Kern::Engine::Pipeline.run(operator: @user, current_time: Time.current)
+    recommendations = Kern::Engine::Pipeline.run(operator: @operator, current_time: Time.current)
 
     assert_empty recommendations
   end
 
   test "commitment with wrong capability is excluded when block exists" do
-    @user.commitments.ready.update_all(capability: :deep)
+    @operator.commitments.ready.update_all(capability: :deep)
 
-    calendar = @user.calendars.first || @user.calendars.create!(name: "Default")
+    calendar = @operator.calendars.first || @operator.calendars.create!(name: "Default")
     calendar.calendar_blocks.create!(
-      user: @user,
+      operator: @operator,
       category: @category,
       capability: :physical,
       date: Date.current,
@@ -71,14 +71,14 @@ class Kern::Engine::PipelineTest < ActiveSupport::TestCase
       block_type: :manual
     )
 
-    recommendations = Kern::Engine::Pipeline.run(operator: @user, current_time: Time.current)
+    recommendations = Kern::Engine::Pipeline.run(operator: @operator, current_time: Time.current)
 
     # Deep commitments should not appear in a physical block
     assert recommendations.none? { |r| r.commitment.deep? }
   end
 
   test "pipeline is deterministic — same inputs produce same outputs" do
-    commitment = @user.commitments.create!(
+    commitment = @operator.commitments.create!(
       title: "Determinism test",
       category: @category,
       state: :ready,
@@ -88,8 +88,8 @@ class Kern::Engine::PipelineTest < ActiveSupport::TestCase
 
     frozen_time = Time.current
 
-    r1 = Kern::Engine::Pipeline.run(operator: @user.reload, current_time: frozen_time)
-    r2 = Kern::Engine::Pipeline.run(operator: @user.reload, current_time: frozen_time)
+    r1 = Kern::Engine::Pipeline.run(operator: @operator.reload, current_time: frozen_time)
+    r2 = Kern::Engine::Pipeline.run(operator: @operator.reload, current_time: frozen_time)
 
     assert_equal r1.length, r2.length
     assert_equal r1.map { |r| r.commitment.id }, r2.map { |r| r.commitment.id }

@@ -4,7 +4,7 @@ require "test_helper"
 
 class Kern::Engine::ConstraintFilterTest < ActiveSupport::TestCase
   setup do
-    @user = users(:one)
+    @operator = operators(:one)
     @category = categories(:one)
     @now = Time.current
   end
@@ -79,7 +79,7 @@ class Kern::Engine::ConstraintFilterTest < ActiveSupport::TestCase
 
   def build_commitment(available_after: nil, estimate_minutes: 60)
     Commitment.new(
-      user: @user,
+      operator: @operator,
       category: @category,
       title: "Test",
       state: :ready,
@@ -90,7 +90,7 @@ class Kern::Engine::ConstraintFilterTest < ActiveSupport::TestCase
 
   def build_block(start_time: "10:00", end_time: "11:30")
     CalendarBlock.new(
-      user: @user,
+      operator: @operator,
       category: @category,
       date: Date.current,
       start_time: start_time,

@@ -2,22 +2,22 @@ require "test_helper"
 
 class CommitmentTest < ActiveSupport::TestCase
   setup do
-    @user = users(:one)
+    @operator = operators(:one)
   end
 
   test "requires a title" do
-    commitment = Commitment.new(user: @user)
+    commitment = Commitment.new(operator: @operator)
     assert_not commitment.valid?
     assert_includes commitment.errors[:title], "can't be blank"
   end
 
   test "default state is inbox" do
-    commitment = Commitment.new(user: @user, title: "Test")
+    commitment = Commitment.new(operator: @operator, title: "Test")
     assert commitment.inbox?
   end
 
   test "validates state enum inclusion" do
-    commitment = Commitment.new(user: @user, title: "Test")
+    commitment = Commitment.new(operator: @operator, title: "Test")
     # In Rails 8 with validate: true, assigning an invalid enum value
     # might raise ArgumentError or just add a validation error.
     # To be safe, we can assert that it's either invalid or raises.

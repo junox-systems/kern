@@ -4,7 +4,7 @@ require "test_helper"
 
 class Kern::Engine::ScorerTest < ActiveSupport::TestCase
   setup do
-    @user = users(:one)
+    @operator = operators(:one)
     @category = categories(:one)
     @now = Time.current
   end
@@ -59,7 +59,7 @@ class Kern::Engine::ScorerTest < ActiveSupport::TestCase
 
   def build_commitment(category_id: nil, due_at: 2.days.from_now)
     Commitment.new(
-      user: @user,
+      operator: @operator,
       category_id: category_id || @category.id,
       title: "Test",
       state: :ready,

@@ -1,15 +1,15 @@
 module ApplicationCable
   class Connection < ActionCable::Connection::Base
-    identified_by :current_user
+    identified_by :current_operator
 
     def connect
-      set_current_user || reject_unauthorized_connection
+      set_current_operator || reject_unauthorized_connection
     end
 
     private
-      def set_current_user
+      def set_current_operator
         if session = Session.find_by(id: cookies.signed[:session_id])
-          self.current_user = session.user
+          self.current_operator = session.operator
         end
       end
   end

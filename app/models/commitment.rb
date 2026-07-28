@@ -1,7 +1,7 @@
 class Commitment < ApplicationRecord
   include HasCapability
 
-  belongs_to :user
+  belongs_to :operator
   belongs_to :category, optional: true
 
   has_many :commitment_dependencies, dependent: :destroy

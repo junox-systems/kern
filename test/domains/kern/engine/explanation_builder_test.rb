@@ -4,7 +4,7 @@ require "test_helper"
 
 class Kern::Engine::ExplanationBuilderTest < ActiveSupport::TestCase
   setup do
-    @user = users(:one)
+    @operator = operators(:one)
     @category = categories(:one)
     @now = Time.current
   end
@@ -86,7 +86,7 @@ class Kern::Engine::ExplanationBuilderTest < ActiveSupport::TestCase
 
   def build_commitment(due_at:)
     Commitment.new(
-      user: @user,
+      operator: @operator,
       category: @category,
       title: "Write proposal",
       state: :ready,
@@ -114,7 +114,7 @@ class Kern::Engine::ExplanationBuilderTest < ActiveSupport::TestCase
 
   def build_block(capability: :deep)
     CalendarBlock.new(
-      user: @user,
+      operator: @operator,
       category: @category,
       capability: capability,
       date: Date.current,

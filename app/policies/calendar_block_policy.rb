@@ -2,6 +2,6 @@
 
 class CalendarBlockPolicy < ApplicationPolicy
   relation_scope do |relation|
-    relation.where(user_id: user.id)
+    relation.where(operator_id: operator.id)
   end
 end

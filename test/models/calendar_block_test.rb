@@ -2,14 +2,14 @@ require "test_helper"
 
 class CalendarBlockTest < ActiveSupport::TestCase
   setup do
-    @user = users(:one)
+    @operator = operators(:one)
     @calendar = calendars(:one)
     @category = categories(:one)
   end
 
   test "start time must be before end time" do
     block = CalendarBlock.new(
-      user: @user,
+      operator: @operator,
       calendar: @calendar,
       category: @category,
       date: Date.today,
@@ -23,7 +23,7 @@ class CalendarBlockTest < ActiveSupport::TestCase
 
   test "requires date, start time, end time" do
     block = CalendarBlock.new(
-      user: @user,
+      operator: @operator,
       calendar: @calendar,
       category: @category
     )

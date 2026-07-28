@@ -3,7 +3,7 @@ require "test_helper"
 class CategoriesControllerTest < ActionDispatch::IntegrationTest
   setup do
     @category = categories(:one)
-    sign_in_as(users(:one))
+    sign_in_as(operators(:one))
   end
 
   test "should get index" do
@@ -18,7 +18,7 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create category" do
     assert_difference("Category.count") do
-      post categories_url, params: { category: { depth: @category.depth, description: @category.description, name: @category.name, parent_id: @category.parent_id, priority: @category.priority, user_id: @category.user_id, weekly_allocation_minutes: @category.weekly_allocation_minutes } }
+      post categories_url, params: { category: { depth: @category.depth, description: @category.description, name: @category.name, parent_id: @category.parent_id, priority: @category.priority, operator_id: @category.operator_id, weekly_allocation_minutes: @category.weekly_allocation_minutes } }
     end
 
     assert_redirected_to category_url(Category.order(:created_at).last)
@@ -35,7 +35,7 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update category" do
-    patch category_url(@category), params: { category: { depth: @category.depth, description: @category.description, name: @category.name, parent_id: @category.parent_id, priority: @category.priority, user_id: @category.user_id, weekly_allocation_minutes: @category.weekly_allocation_minutes } }
+    patch category_url(@category), params: { category: { depth: @category.depth, description: @category.description, name: @category.name, parent_id: @category.parent_id, priority: @category.priority, operator_id: @category.operator_id, weekly_allocation_minutes: @category.weekly_allocation_minutes } }
     assert_redirected_to category_url(@category)
   end
 

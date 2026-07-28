@@ -9,7 +9,7 @@
   </div>
   <div class="flex-none">
     <ul class="menu menu-horizontal px-1 gap-1 items-center">
-      <% inbox_count = Current.user&.commitments&.inbox&.count || 0 %>
+      <% inbox_count = Current.operator&.commitments&.inbox&.count || 0 %>
       <li>
         <%= link_to inbox_path, class: "rounded-lg text-sm" do %>
           Inbox
@@ -21,7 +21,7 @@
       <li><%= link_to "Categories", categories_path, class: "rounded-lg text-sm" %></li>
       <li>
         <details>
-          <summary class="rounded-lg text-sm"><%= Current.user&.name || "Account" %></summary>
+          <summary class="rounded-lg text-sm"><%= Current.operator&.name || "Account" %></summary>
           <ul class="bg-base-100 border border-base-200 rounded-lg shadow-md z-50 w-40">
             <li><%= link_to "Profile", profile_path %></li>
             <li><%= link_to "Commitments", commitments_path %></li>

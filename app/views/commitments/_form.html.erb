@@ -27,7 +27,7 @@
   <%# Category %>
   <div>
     <%= form.label :category_id, "Category", class: "label text-sm font-medium" %>
-    <%= form.collection_select :category_id, Current.user.categories.order(:priority), :id, :name,
+    <%= form.collection_select :category_id, Current.operator.categories.order(:priority), :id, :name,
           { include_blank: "Select category..." },
           { class: "select select-bordered w-full" } %>
   </div>

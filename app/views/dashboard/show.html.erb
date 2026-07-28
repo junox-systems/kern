@@ -28,7 +28,7 @@
   </div>
 
   <%# Turbo stream subscription for real-time recommendation broadcasts %>
-  <%= turbo_stream_from Current.user, "recommendations" %>
+  <%= turbo_stream_from Current.operator, "recommendations" %>
 
   <%# Primary recommendation %>
   <%= turbo_frame_tag "primary_recommendation" do %>

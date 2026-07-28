@@ -2,10 +2,10 @@ require "test_helper"
 
 class CommitmentDependencyTest < ActiveSupport::TestCase
   setup do
-    @user = users(:one)
-    @commitment1 = Commitment.create!(user: @user, title: "Comm 1")
-    @commitment2 = Commitment.create!(user: @user, title: "Comm 2")
-    @commitment3 = Commitment.create!(user: @user, title: "Comm 3")
+    @operator = operators(:one)
+    @commitment1 = Commitment.create!(operator: @operator, title: "Comm 1")
+    @commitment2 = Commitment.create!(operator: @operator, title: "Comm 2")
+    @commitment3 = Commitment.create!(operator: @operator, title: "Comm 3")
   end
 
   test "cannot depend on itself" do

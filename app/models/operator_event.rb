@@ -1,5 +1,5 @@
 class OperatorEvent < ApplicationRecord
-  belongs_to :user
+  belongs_to :operator
   belongs_to :commitment, optional: true
 
   enum :event_type, {

@@ -3,7 +3,7 @@ class CalendarBlocksController < ApplicationController
 
   # GET /calendar_blocks
   def index
-    @calendar_blocks = Current.user.calendar_blocks
+    @calendar_blocks = Current.operator.calendar_blocks
   end
 
   # GET /calendar_blocks/1
@@ -13,7 +13,7 @@ class CalendarBlocksController < ApplicationController
 
   # GET /calendar_blocks/new
   def new
-    @calendar_block = Current.user.calendar_blocks.build
+    @calendar_block = Current.operator.calendar_blocks.build
   end
 
   # GET /calendar_blocks/1/edit
@@ -23,7 +23,7 @@ class CalendarBlocksController < ApplicationController
 
   # POST /calendar_blocks
   def create
-    @calendar_block = Current.user.calendar_blocks.build(calendar_block_params)
+    @calendar_block = Current.operator.calendar_blocks.build(calendar_block_params)
 
     respond_to do |format|
       if @calendar_block.save
@@ -65,7 +65,7 @@ class CalendarBlocksController < ApplicationController
   private
 
   def set_calendar_block
-    @calendar_block = Current.user.calendar_blocks.find(params.expect(:id))
+    @calendar_block = Current.operator.calendar_blocks.find(params.expect(:id))
   end
 
   def calendar_block_params

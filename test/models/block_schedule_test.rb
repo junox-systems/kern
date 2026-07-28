@@ -2,14 +2,14 @@ require "test_helper"
 
 class BlockScheduleTest < ActiveSupport::TestCase
   setup do
-    @user = users(:one)
+    @operator = operators(:one)
     @calendar = calendars(:one)
     @category = categories(:one)
   end
 
   test "start time must be before end time" do
     schedule = BlockSchedule.new(
-      user: @user,
+      operator: @operator,
       calendar: @calendar,
       category: @category,
       start_time: "10:00:00",
@@ -22,7 +22,7 @@ class BlockScheduleTest < ActiveSupport::TestCase
 
   test "effective_until must be after effective_from" do
     schedule = BlockSchedule.new(
-      user: @user,
+      operator: @operator,
       calendar: @calendar,
       category: @category,
       start_time: "09:00:00",
@@ -37,7 +37,7 @@ class BlockScheduleTest < ActiveSupport::TestCase
 
   test "validates days of week" do
     schedule = BlockSchedule.new(
-      user: @user,
+      operator: @operator,
       calendar: @calendar,
       category: @category,
       start_time: "09:00:00",

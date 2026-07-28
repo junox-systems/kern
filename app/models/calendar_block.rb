@@ -1,7 +1,7 @@
 class CalendarBlock < ApplicationRecord
   include HasCapability
 
-  belongs_to :user
+  belongs_to :operator
   belongs_to :calendar
   belongs_to :category
   belongs_to :block_schedule, optional: true

@@ -2,7 +2,7 @@ require "test_helper"
 
 class ProfilesControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @user = users(:one)
+    @operator = operators(:one)
   end
 
   test "should redirect show to login if unauthenticated" do
@@ -11,35 +11,35 @@ class ProfilesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should show profile if authenticated" do
-    sign_in_as(@user)
+    sign_in_as(@operator)
     get profile_url
     assert_response :success
   end
 
   test "should update profile basic fields" do
-    sign_in_as(@user)
-    patch profile_url, params: { user: { name: "Updated Name", email_address: "updated@example.com", timezone: "America/New_York" } }
+    sign_in_as(@operator)
+    patch profile_url, params: { operator: { name: "Updated Name", email_address: "updated@example.com", timezone: "America/New_York" } }
     assert_redirected_to profile_url
     assert_equal "Profile updated successfully.", flash[:notice]
 
-    @user.reload
-    assert_equal "Updated Name", @user.name
-    assert_equal "updated@example.com", @user.email_address
-    assert_equal "America/New_York", @user.timezone
+    @operator.reload
+    assert_equal "Updated Name", @operator.name
+    assert_equal "updated@example.com", @operator.email_address
+    assert_equal "America/New_York", @operator.timezone
   end
 
   test "should update profile password when password parameters are supplied" do
-    sign_in_as(@user)
-    assert_changes -> { @user.reload.password_digest } do
-      patch profile_url, params: { user: { name: @user.name, email_address: @user.email_address, timezone: @user.timezone, password: "newpassword", password_confirmation: "newpassword" } }
+    sign_in_as(@operator)
+    assert_changes -> { @operator.reload.password_digest } do
+      patch profile_url, params: { operator: { name: @operator.name, email_address: @operator.email_address, timezone: @operator.timezone, password: "newpassword", password_confirmation: "newpassword" } }
     end
     assert_redirected_to profile_url
   end
 
   test "should not update password when password parameters are blank" do
-    sign_in_as(@user)
-    assert_no_changes -> { @user.reload.password_digest } do
-      patch profile_url, params: { user: { name: @user.name, email_address: @user.email_address, timezone: @user.timezone, password: "", password_confirmation: "" } }
+    sign_in_as(@operator)
+    assert_no_changes -> { @operator.reload.password_digest } do
+      patch profile_url, params: { operator: { name: @operator.name, email_address: @operator.email_address, timezone: @operator.timezone, password: "", password_confirmation: "" } }
     end
     assert_redirected_to profile_url
   end

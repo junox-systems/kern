@@ -3,7 +3,7 @@ class CommitmentsController < ApplicationController
 
   # GET /commitments
   def index
-    @commitments = Current.user.commitments
+    @commitments = Current.operator.commitments
   end
 
   # GET /commitments/1
@@ -13,7 +13,7 @@ class CommitmentsController < ApplicationController
 
   # GET /commitments/new
   def new
-    @commitment = Current.user.commitments.build
+    @commitment = Current.operator.commitments.build
   end
 
   # GET /commitments/1/edit
@@ -23,13 +23,13 @@ class CommitmentsController < ApplicationController
 
   # POST /commitments
   def create
-    @commitment = Current.user.commitments.build(commitment_params)
+    @commitment = Current.operator.commitments.build(commitment_params)
     @commitment.state = :inbox
 
     respond_to do |format|
       if @commitment.save
         @commitment.operator_events.create!(
-          user: Current.user,
+          operator: Current.operator,
           event_type: :capture
         )
         format.html { redirect_to @commitment, notice: "Commitment captured." }
@@ -73,7 +73,7 @@ class CommitmentsController < ApplicationController
 
     @commitment.done!
     @commitment.operator_events.create!(
-      user: Current.user,
+      operator: Current.operator,
       event_type: :complete,
       metadata: { completed_at: Time.current.iso8601 }
     )
@@ -99,7 +99,7 @@ class CommitmentsController < ApplicationController
     defer_until = params[:available_after] || 1.day.from_now
     @commitment.update!(available_after: defer_until)
     @commitment.operator_events.create!(
-      user: Current.user,
+      operator: Current.operator,
       event_type: :defer,
       metadata: { deferred_until: defer_until.to_s }
     )
@@ -117,7 +117,7 @@ class CommitmentsController < ApplicationController
 
     @commitment.archived!
     @commitment.operator_events.create!(
-      user: Current.user,
+      operator: Current.operator,
       event_type: :archive
     )
 
@@ -131,7 +131,7 @@ class CommitmentsController < ApplicationController
   private
 
   def set_commitment
-    @commitment = Current.user.commitments.find(params.expect(:id))
+    @commitment = Current.operator.commitments.find(params.expect(:id))
   end
 
   def commitment_params

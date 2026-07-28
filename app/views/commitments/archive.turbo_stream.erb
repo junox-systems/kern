@@ -1,6 +1,6 @@
 <%# After archiving a commitment, re-run the pipeline and replace the recommendation card. %>
 
-<% recommendations = Kern::Engine::Pipeline.run(operator: Current.user, current_time: Time.current) %>
+<% recommendations = Kern::Engine::Pipeline.run(operator: Current.operator, current_time: Time.current) %>
 <% @primary = recommendations.find(&:primary?) %>
 
 <%= turbo_stream.replace "primary_recommendation" do %>

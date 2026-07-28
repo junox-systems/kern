@@ -2,43 +2,43 @@
 # development, test). The code here should be idempotent so that it can be executed at any point in every environment.
 # The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
 
-# Only seed if no categories exist for the first user (idempotent)
-user = User.first
-return unless user
-return if user.categories.any?
+# Only seed if no categories exist for the first operator (idempotent)
+operator = Operator.first
+return unless operator
+return if operator.categories.any?
 
-puts "Seeding Kern for #{user.name}..."
+puts "Seeding Kern for #{operator.name}..."
 
 # Categories — areas of life with weekly allocations
-work = user.categories.create!(
+work = operator.categories.create!(
   name: "Work",
   description: "Professional commitments and projects",
   priority: 1,
   weekly_allocation_minutes: 1200  # 20 hours
 )
 
-health = user.categories.create!(
+health = operator.categories.create!(
   name: "Health",
   description: "Exercise, medical, wellness",
   priority: 2,
   weekly_allocation_minutes: 420   # 7 hours
 )
 
-learning = user.categories.create!(
+learning = operator.categories.create!(
   name: "Learning",
   description: "Reading, courses, exploration",
   priority: 3,
   weekly_allocation_minutes: 300   # 5 hours
 )
 
-relationships = user.categories.create!(
+relationships = operator.categories.create!(
   name: "Relationships",
   description: "Family, friends, community",
   priority: 4,
   weekly_allocation_minutes: 360   # 6 hours
 )
 
-maintenance = user.categories.create!(
+maintenance = operator.categories.create!(
   name: "Maintenance",
   description: "Admin, errands, logistics",
   priority: 5,
@@ -46,13 +46,13 @@ maintenance = user.categories.create!(
 )
 
 # Calendar — create a default Kern calendar
-calendar = user.calendars.create!(name: "Kern")
+calendar = operator.calendars.create!(name: "Kern")
 
 # Calendar blocks — today's schedule
 today = Date.current
 
 calendar.calendar_blocks.create!(
-  user: user,
+  operator: operator,
   category: work,
   capability: :deep,
   date: today,
@@ -62,7 +62,7 @@ calendar.calendar_blocks.create!(
 )
 
 calendar.calendar_blocks.create!(
-  user: user,
+  operator: operator,
   category: maintenance,
   capability: :admin,
   date: today,
@@ -72,7 +72,7 @@ calendar.calendar_blocks.create!(
 )
 
 calendar.calendar_blocks.create!(
-  user: user,
+  operator: operator,
   category: work,
   capability: :deep,
   date: today,
@@ -82,7 +82,7 @@ calendar.calendar_blocks.create!(
 )
 
 calendar.calendar_blocks.create!(
-  user: user,
+  operator: operator,
   category: health,
   capability: :physical,
   date: today,
@@ -92,7 +92,7 @@ calendar.calendar_blocks.create!(
 )
 
 calendar.calendar_blocks.create!(
-  user: user,
+  operator: operator,
   category: learning,
   capability: :light,
   date: today,
@@ -102,7 +102,7 @@ calendar.calendar_blocks.create!(
 )
 
 # Commitments — a realistic set
-user.commitments.create!(
+operator.commitments.create!(
   title: "Write proposal for client project",
   description: "Draft the technical proposal for the new engagement",
   category: work,
@@ -112,7 +112,7 @@ user.commitments.create!(
   state: :ready
 )
 
-user.commitments.create!(
+operator.commitments.create!(
   title: "Review architecture design",
   description: "Review and provide feedback on the system architecture",
   category: work,
@@ -122,7 +122,7 @@ user.commitments.create!(
   state: :ready
 )
 
-user.commitments.create!(
+operator.commitments.create!(
   title: "Exercise",
   description: "30-minute run or gym session",
   category: health,
@@ -131,7 +131,7 @@ user.commitments.create!(
   state: :ready
 )
 
-user.commitments.create!(
+operator.commitments.create!(
   title: "Read research paper",
   description: "Read and take notes on the distributed systems paper",
   category: learning,
@@ -141,7 +141,7 @@ user.commitments.create!(
   state: :ready
 )
 
-user.commitments.create!(
+operator.commitments.create!(
   title: "Call mother",
   category: relationships,
   capability: :social,
@@ -149,7 +149,7 @@ user.commitments.create!(
   state: :ready
 )
 
-user.commitments.create!(
+operator.commitments.create!(
   title: "Pay electricity bill",
   category: maintenance,
   capability: :admin,
@@ -158,7 +158,7 @@ user.commitments.create!(
   state: :ready
 )
 
-user.commitments.create!(
+operator.commitments.create!(
   title: "Buy groceries",
   category: maintenance,
   capability: :physical,
@@ -167,8 +167,8 @@ user.commitments.create!(
 )
 
 # Inbox items — uncategorized captures
-user.commitments.create!(title: "Look into new database options", state: :inbox)
-user.commitments.create!(title: "Schedule dentist appointment", state: :inbox)
-user.commitments.create!(title: "Reply to Sarah's email", state: :inbox)
+operator.commitments.create!(title: "Look into new database options", state: :inbox)
+operator.commitments.create!(title: "Schedule dentist appointment", state: :inbox)
+operator.commitments.create!(title: "Reply to Sarah's email", state: :inbox)
 
-puts "Seeded: #{user.categories.count} categories, #{user.commitments.count} commitments, #{user.calendar_blocks.count} blocks"
+puts "Seeded: #{operator.categories.count} categories, #{operator.commitments.count} commitments, #{operator.calendar_blocks.count} blocks"

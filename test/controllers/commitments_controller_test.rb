@@ -3,7 +3,7 @@ require "test_helper"
 class CommitmentsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @commitment = commitments(:one)
-    sign_in_as(users(:one))
+    sign_in_as(operators(:one))
   end
 
   test "should get index" do
@@ -18,7 +18,7 @@ class CommitmentsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create commitment" do
     assert_difference("Commitment.count") do
-      post commitments_url, params: { commitment: { available_after: @commitment.available_after, capability: @commitment.capability, category_id: @commitment.category_id, context: @commitment.context, description: @commitment.description, due_at: @commitment.due_at, estimate_minutes: @commitment.estimate_minutes, state: @commitment.state, title: @commitment.title, user_id: @commitment.user_id } }
+      post commitments_url, params: { commitment: { available_after: @commitment.available_after, capability: @commitment.capability, category_id: @commitment.category_id, context: @commitment.context, description: @commitment.description, due_at: @commitment.due_at, estimate_minutes: @commitment.estimate_minutes, state: @commitment.state, title: @commitment.title, operator_id: @commitment.operator_id } }
     end
 
     assert_redirected_to commitment_url(Commitment.order(:created_at).last)
@@ -35,7 +35,7 @@ class CommitmentsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update commitment" do
-    patch commitment_url(@commitment), params: { commitment: { available_after: @commitment.available_after, capability: @commitment.capability, category_id: @commitment.category_id, context: @commitment.context, description: @commitment.description, due_at: @commitment.due_at, estimate_minutes: @commitment.estimate_minutes, state: @commitment.state, title: @commitment.title, user_id: @commitment.user_id } }
+    patch commitment_url(@commitment), params: { commitment: { available_after: @commitment.available_after, capability: @commitment.capability, category_id: @commitment.category_id, context: @commitment.context, description: @commitment.description, due_at: @commitment.due_at, estimate_minutes: @commitment.estimate_minutes, state: @commitment.state, title: @commitment.title, operator_id: @commitment.operator_id } }
     assert_redirected_to commitment_url(@commitment)
   end
 

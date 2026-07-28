@@ -1,7 +1,7 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  user: one
+  operator: one
   name: Category One
   description: Description one
   priority: 1
@@ -9,7 +9,7 @@ one:
   depth: 0
 
 two:
-  user: two
+  operator: two
   name: Category Two
   description: Description two
   priority: 2

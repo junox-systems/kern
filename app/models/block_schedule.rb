@@ -1,7 +1,7 @@
 class BlockSchedule < ApplicationRecord
   include HasCapability
 
-  belongs_to :user
+  belongs_to :operator
   belongs_to :calendar
   belongs_to :category
   has_many :calendar_blocks, dependent: :nullify

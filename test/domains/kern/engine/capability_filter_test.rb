@@ -4,7 +4,7 @@ require "test_helper"
 
 class Kern::Engine::CapabilityFilterTest < ActiveSupport::TestCase
   setup do
-    @user = users(:one)
+    @operator = operators(:one)
     @category = categories(:one)
   end
 
@@ -56,7 +56,7 @@ class Kern::Engine::CapabilityFilterTest < ActiveSupport::TestCase
 
   def build_commitment(capability:)
     Commitment.new(
-      user: @user,
+      operator: @operator,
       category: @category,
       title: "Test",
       state: :ready,
@@ -67,7 +67,7 @@ class Kern::Engine::CapabilityFilterTest < ActiveSupport::TestCase
 
   def build_block(capability:)
     CalendarBlock.new(
-      user: @user,
+      operator: @operator,
       category: @category,
       capability: capability,
       date: Date.current,

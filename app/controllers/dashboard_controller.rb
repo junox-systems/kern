@@ -1,14 +1,14 @@
 class DashboardController < ApplicationController
   def show
     recommendations = Kern::Engine::Pipeline.run(
-      operator: Current.user,
+      operator: Current.operator,
       current_time: Time.current
     )
 
     @primary = recommendations.find(&:primary?)
     @secondary = recommendations.select(&:secondary?)
     @current_block = current_block
-    @inbox_count = Current.user.commitments.inbox.count
+    @inbox_count = Current.operator.commitments.inbox.count
   end
 
   private
@@ -17,7 +17,7 @@ class DashboardController < ApplicationController
     today = Date.current
     time_of_day = Time.current.strftime("%H:%M:%S")
 
-    Current.user.calendar_blocks
+    Current.operator.calendar_blocks
       .where(date: today)
       .order(:start_time)
       .find do |block|

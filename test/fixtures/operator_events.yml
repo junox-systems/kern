@@ -1,13 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  user: one
+  operator: one
   commitment: one
   event_type: 1
   metadata: 
 
 two:
-  user: two
+  operator: two
   commitment: two
   event_type: 1
   metadata: 
