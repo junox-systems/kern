@@ -1,0 +1,63 @@
+<%# The primary recommendation card — the heart of Kern's interface.
+     Shows one commitment with progressive disclosure of reasons. %>
+
+<div class="card bg-base-100 border border-base-300 shadow-sm">
+  <div class="card-body p-6">
+    <%# Commitment title %>
+    <h2 class="card-title text-xl font-display font-semibold text-base-content">
+      <%= recommendation.commitment.title %>
+    </h2>
+
+    <%# Category + capability %>
+    <div class="flex items-center gap-2 mt-1">
+      <% if recommendation.commitment.category %>
+        <span class="text-sm text-base-content/60"><%= recommendation.commitment.category.name %></span>
+      <% end %>
+      <% if recommendation.commitment.capability %>
+        <span class="badge badge-sm badge-outline"><%= recommendation.commitment.capability.humanize %></span>
+      <% end %>
+      <% if recommendation.commitment.estimate_minutes %>
+        <span class="text-xs text-base-content/40"><%= recommendation.commitment.estimate_minutes %>min</span>
+      <% end %>
+    </div>
+
+    <%# Reasons — progressive disclosure via collapse %>
+    <div class="collapse collapse-arrow bg-base-200/30 mt-4 rounded-lg">
+      <input type="checkbox" />
+      <div class="collapse-title text-sm text-base-content/50 font-body py-3 min-h-0">
+        Why?
+      </div>
+      <div class="collapse-content px-4">
+        <ul class="space-y-2 pb-2">
+          <% recommendation.reasons.each do |reason| %>
+            <li class="flex items-start gap-2 text-sm text-base-content/70">
+              <span class="text-base-content/30 mt-0.5">↓</span>
+              <span><%= reason %></span>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+
+    <%# Actions %>
+    <div class="card-actions mt-5 flex gap-2">
+      <%= button_to "Complete",
+            complete_commitment_path(recommendation.commitment),
+            method: :post,
+            class: "btn btn-primary btn-sm flex-1",
+            form: { data: { turbo_frame: "primary_recommendation" } } %>
+
+      <%= button_to "Defer",
+            defer_commitment_path(recommendation.commitment),
+            method: :post,
+            class: "btn btn-ghost btn-sm flex-1",
+            form: { data: { turbo_frame: "primary_recommendation" } } %>
+
+      <%= button_to "Archive",
+            archive_commitment_path(recommendation.commitment),
+            method: :post,
+            class: "btn btn-ghost btn-sm text-base-content/40 flex-1",
+            form: { data: { turbo_frame: "primary_recommendation" } } %>
+    </div>
+  </div>
+</div>

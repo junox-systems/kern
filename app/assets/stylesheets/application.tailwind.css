@@ -2,3 +2,23 @@
 @plugin "daisyui" {
   themes: winter --default, sunset --prefersdark;
 }
+
+@theme {
+  --font-display: 'Fraunces', serif;
+  --font-body: 'Atkinson Hyperlegible Next', sans-serif;
+}
+
+/* Apply body font globally */
+body {
+  font-family: var(--font-body);
+}
+
+/* Display font for headings and meaningful text */
+.font-display {
+  font-family: var(--font-display);
+}
+
+/* Body font explicit class */
+.font-body {
+  font-family: var(--font-body);
+}

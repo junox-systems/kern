@@ -1,0 +1,63 @@
+<% content_for :title, "Inbox" %>
+
+<div class="max-w-lg mx-auto mt-8 md:mt-16 px-2">
+  <h1 class="text-2xl font-display font-semibold text-base-content mb-6">Inbox</h1>
+
+  <% if @current %>
+    <div class="card bg-base-100 border border-base-300 shadow-sm">
+      <div class="card-body p-6">
+        <h2 class="card-title text-lg font-display"><%= @current.title %></h2>
+
+        <% if @current.description.present? %>
+          <p class="text-sm text-base-content/60 mt-2"><%= @current.description %></p>
+        <% end %>
+
+        <%= form_with model: @current, url: commitment_path(@current), method: :patch, class: "mt-4 space-y-4" do |f| %>
+          <div>
+            <%= f.label :category_id, "Category", class: "label text-sm font-medium" %>
+            <%= f.collection_select :category_id, Current.user.categories, :id, :name,
+                  { include_blank: "Select category..." },
+                  { class: "select select-bordered w-full" } %>
+          </div>
+
+          <div>
+            <%= f.label :capability, class: "label text-sm font-medium" %>
+            <%= f.select :capability,
+                  Commitment.capabilities.keys.map { |c| [c.humanize, c] },
+                  { include_blank: "Any" },
+                  { class: "select select-bordered w-full" } %>
+          </div>
+
+          <div>
+            <%= f.label :estimate_minutes, "Estimate (minutes)", class: "label text-sm font-medium" %>
+            <%= f.number_field :estimate_minutes, class: "input input-bordered w-full", min: 5, step: 5 %>
+          </div>
+
+          <div>
+            <%= f.label :due_at, "Due date", class: "label text-sm font-medium" %>
+            <%= f.datetime_local_field :due_at, class: "input input-bordered w-full" %>
+          </div>
+
+          <div class="flex gap-2 mt-6">
+            <%= f.hidden_field :state, value: "ready" %>
+            <%= f.submit "Ready", class: "btn btn-primary btn-sm flex-1" %>
+            <%= button_to "Archive", archive_commitment_path(@current), method: :post, class: "btn btn-ghost btn-sm flex-1" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <% remaining = @commitments.count - 1 %>
+    <% if remaining > 0 %>
+      <p class="text-center text-xs text-base-content/40 mt-4"><%= remaining %> more in inbox</p>
+    <% end %>
+
+  <% else %>
+    <div class="text-center py-12">
+      <p class="text-lg font-display text-base-content/70">Inbox empty.</p>
+      <p class="text-sm text-base-content/40 mt-2">
+        <%= link_to "Back to home", root_path, class: "link link-primary" %>
+      </p>
+    </div>
+  <% end %>
+</div>

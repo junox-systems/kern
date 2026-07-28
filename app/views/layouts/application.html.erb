@@ -1,18 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html data-theme="winter">
   <head>
     <title><%= content_for(:title) || "Kern" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="application-name" content="Kern">
     <meta name="mobile-web-app-capable" content="yes">
+    <meta name="description" content="Spend your attention on living life, not on deciding.">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= yield :head %>
 
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+    <%# Typography: Fraunces for meaning, Atkinson Hyperlegible Next for everything else %>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=Atkinson+Hyperlegible+Next:wght@400;700&display=swap" rel="stylesheet">
 
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
@@ -23,11 +26,11 @@
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
   </head>
 
-  <body>
+  <body class="min-h-screen bg-base-100">
     <% if authenticated? %>
       <%= render "layouts/navigation" %>
     <% end %>
-    <main class="container mx-auto px-4">
+    <main>
       <%= yield %>
     </main>
   </body>

@@ -1,21 +1,30 @@
 Rails.application.routes.draw do
-  resources :calendar_blocks
-  resources :commitments
+  # The home screen — attention allocation
+  root "dashboard#show"
+  resource :dashboard, only: :show, controller: "dashboard"
+
+  # Commitment lifecycle
+  resources :commitments do
+    member do
+      post :complete
+      post :defer
+      post :archive
+    end
+  end
+
+  # Inbox triage
+  resource :inbox, only: :show, controller: "inbox"
+
+  # Configuration
   resources :categories
+  resources :calendar_blocks
+
+  # Authentication
   resource :session
   resource :registration, only: %i[new create]
   resource :profile, only: %i[show update]
   resources :passwords, param: :token
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
+  # Health
   get "up" => "rails/health#show", as: :rails_health_check
-
-  # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
-  # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
-  # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
-
-  # Defines the root path route ("/")
-  root "commitments#index"
 end

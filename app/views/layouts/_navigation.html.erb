@@ -1,14 +1,37 @@
-<div class="navbar bg-base-200 px-4 mb-6 shadow-sm">
+<%# Minimal navigation — Kern should disappear while you work.
+     UX Principle 14: Remove Navigation. Every screen should have a reason to exist. %>
+
+<div class="navbar bg-base-100 border-b border-base-200 px-4 mb-0">
   <div class="flex-1">
-    <%= link_to "Kern", root_path, class: "btn btn-ghost normal-case text-xl font-bold" %>
+    <%= link_to root_path, class: "text-lg font-display font-semibold text-base-content hover:text-primary transition-colors" do %>
+      Kern
+    <% end %>
   </div>
   <div class="flex-none">
-    <ul class="menu menu-horizontal px-1 gap-2">
-      <li><%= link_to "Commitments", commitments_path, class: "rounded-lg" %></li>
-      <li><%= link_to "Categories", categories_path, class: "rounded-lg" %></li>
-      <li><%= link_to "Calendar Blocks", calendar_blocks_path, class: "rounded-lg" %></li>
-      <li><%= link_to "Profile", profile_path, class: "rounded-lg" %></li>
+    <ul class="menu menu-horizontal px-1 gap-1 items-center">
+      <% inbox_count = Current.user&.commitments&.inbox&.count || 0 %>
+      <li>
+        <%= link_to inbox_path, class: "rounded-lg text-sm" do %>
+          Inbox
+          <% if inbox_count > 0 %>
+            <span class="badge badge-xs badge-primary"><%= inbox_count %></span>
+          <% end %>
+        <% end %>
+      </li>
+      <li><%= link_to "Categories", categories_path, class: "rounded-lg text-sm" %></li>
+      <li>
+        <details>
+          <summary class="rounded-lg text-sm"><%= Current.user&.name || "Account" %></summary>
+          <ul class="bg-base-100 border border-base-200 rounded-lg shadow-md z-50 w-40">
+            <li><%= link_to "Profile", profile_path %></li>
+            <li><%= link_to "Commitments", commitments_path %></li>
+            <li><%= link_to "Calendar", calendar_blocks_path %></li>
+            <li class="border-t border-base-200">
+              <%= button_to "Log out", session_path, method: :delete, class: "text-error w-full text-left" %>
+            </li>
+          </ul>
+        </details>
+      </li>
     </ul>
-    <%= button_to "Log out", session_path, method: :delete, class: "btn btn-outline btn-sm btn-error ml-4" %>
   </div>
 </div>

@@ -1,0 +1,59 @@
+<% content_for :title, "Kern" %>
+
+<div class="max-w-lg mx-auto mt-8 md:mt-16 px-2">
+  <%# Time context %>
+  <div class="mb-8">
+    <p class="text-sm text-base-content/50 font-body">
+      <%= Time.current.strftime("%A") %>
+    </p>
+    <p class="text-2xl font-display font-semibold text-base-content">
+      <%= Time.current.strftime("%-I:%M %p") %>
+    </p>
+    <% if @current_block %>
+      <p class="text-sm text-base-content/60 mt-1">
+        <span class="badge badge-sm badge-outline"><%= @current_block.capability&.humanize || "Open" %></span>
+        <span class="ml-1"><%= @current_block.category&.name %></span>
+      </p>
+    <% end %>
+  </div>
+
+  <%# Primary recommendation %>
+  <%= turbo_frame_tag "primary_recommendation" do %>
+    <% if @primary %>
+      <%= render "dashboard/recommendation_card", recommendation: @primary %>
+    <% else %>
+      <%= render "dashboard/empty_state" %>
+    <% end %>
+  <% end %>
+
+  <%# Secondary list %>
+  <% if @secondary.any? %>
+    <div class="mt-10">
+      <p class="text-xs text-base-content/40 uppercase tracking-wider mb-3 font-body">Later</p>
+      <ul class="space-y-2">
+        <% @secondary.each do |rec| %>
+          <li class="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-base-200/50 transition-colors">
+            <div>
+              <span class="text-sm text-base-content/80"><%= rec.commitment.title %></span>
+              <% if rec.commitment.category %>
+                <span class="text-xs text-base-content/40 ml-2"><%= rec.commitment.category.name %></span>
+              <% end %>
+            </div>
+            <% if rec.commitment.capability %>
+              <span class="badge badge-xs badge-ghost"><%= rec.commitment.capability.humanize %></span>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%# Inbox nudge %>
+  <% if @inbox_count > 0 %>
+    <div class="mt-10 text-center">
+      <%= link_to inbox_path, class: "text-xs text-base-content/40 hover:text-base-content/60 transition-colors" do %>
+        <%= @inbox_count %> in inbox
+      <% end %>
+    </div>
+  <% end %>
+</div>
