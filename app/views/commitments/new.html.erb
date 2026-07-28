@@ -1,11 +1,12 @@
-<% content_for :title, "New commitment" %>
+<% content_for :title, "New Commitment" %>
 
-<h1>New commitment</h1>
+<div class="max-w-xl mx-auto mt-8 px-4">
+  <div class="mb-6">
+    <%= link_to "← Back", commitments_path, class: "text-sm text-base-content/60 hover:text-primary transition-colors" %>
+    <h1 class="text-2xl font-display font-semibold text-base-content mt-2">New Commitment</h1>
+  </div>
 
-<%= render "form", commitment: @commitment %>
-
-<br>
-
-<div>
-  <%= link_to "Back to commitments", commitments_path %>
+  <div class="card bg-base-100 border border-base-300 shadow-sm p-6">
+    <%= render "form", commitment: @commitment %>
+  </div>
 </div>

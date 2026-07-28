@@ -1,16 +1,30 @@
-<p style="color: green"><%= notice %></p>
+<% content_for :title, "Calendar Blocks" %>
 
-<% content_for :title, "Calendar blocks" %>
+<div class="max-w-2xl mx-auto mt-8 px-4">
+  <div class="flex items-center justify-between mb-6">
+    <div>
+      <h1 class="text-2xl font-display font-semibold text-base-content">Calendar Blocks</h1>
+      <p class="text-xs text-base-content/50 mt-1">Reserved time blocks for attention allocation</p>
+    </div>
+    <%= link_to "New block", new_calendar_block_path, class: "btn btn-primary btn-sm" %>
+  </div>
 
-<h1>Calendar blocks</h1>
+  <% if notice %>
+    <div role="alert" class="alert alert-success alert-sm mb-4">
+      <span><%= notice %></span>
+    </div>
+  <% end %>
 
-<div id="calendar_blocks">
-  <% @calendar_blocks.each do |calendar_block| %>
-    <%= render calendar_block %>
-    <p>
-      <%= link_to "Show this calendar block", calendar_block %>
-    </p>
+  <% if @calendar_blocks.any? %>
+    <div class="space-y-3">
+      <% @calendar_blocks.each do |block| %>
+        <%= render block %>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="text-center py-12 border border-dashed border-base-300 rounded-xl">
+      <p class="text-base-content/60">No calendar blocks scheduled.</p>
+      <%= link_to "Create your first calendar block", new_calendar_block_path, class: "btn btn-primary btn-sm mt-4" %>
+    </div>
   <% end %>
 </div>
-
-<%= link_to "New calendar block", new_calendar_block_path %>

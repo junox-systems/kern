@@ -1,12 +1,12 @@
-<% content_for :title, "Editing category" %>
+<% content_for :title, "Edit Category" %>
 
-<h1>Editing category</h1>
+<div class="max-w-xl mx-auto mt-8 px-4">
+  <div class="mb-6">
+    <%= link_to "← Back", @category, class: "text-sm text-base-content/60 hover:text-primary transition-colors" %>
+    <h1 class="text-2xl font-display font-semibold text-base-content mt-2">Editing Category</h1>
+  </div>
 
-<%= render "form", category: @category %>
-
-<br>
-
-<div>
-  <%= link_to "Show this category", @category %> |
-  <%= link_to "Back to categories", categories_path %>
+  <div class="card bg-base-100 border border-base-300 shadow-sm p-6">
+    <%= render "form", category: @category %>
+  </div>
 </div>

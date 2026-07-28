@@ -1,67 +1,67 @@
-<%= form_with(model: calendar_block) do |form| %>
+<%= form_with(model: calendar_block, class: "space-y-4") do |form| %>
   <% if calendar_block.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(calendar_block.errors.count, "error") %> prohibited this calendar_block from being saved:</h2>
-
-      <ul>
-        <% calendar_block.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+    <div role="alert" class="alert alert-error alert-sm">
+      <div>
+        <p class="font-semibold"><%= pluralize(calendar_block.errors.count, "error") %>:</p>
+        <ul class="list-disc list-inside text-sm mt-1">
+          <% calendar_block.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
     </div>
   <% end %>
 
   <div>
-    <%= form.label :user_id, style: "display: block" %>
-    <%= form.text_field :user_id %>
+    <%= form.label :calendar_id, "Calendar", class: "label text-sm font-medium" %>
+    <%= form.collection_select :calendar_id, Current.user.calendars, :id, :name,
+          {},
+          { class: "select select-bordered w-full" } %>
   </div>
 
   <div>
-    <%= form.label :calendar_id, style: "display: block" %>
-    <%= form.text_field :calendar_id %>
+    <%= form.label :category_id, "Category", class: "label text-sm font-medium" %>
+    <%= form.collection_select :category_id, Current.user.categories, :id, :name,
+          { include_blank: "Select category..." },
+          { class: "select select-bordered w-full" } %>
+  </div>
+
+  <div class="grid grid-cols-2 gap-4">
+    <div>
+      <%= form.label :capability, class: "label text-sm font-medium" %>
+      <%= form.select :capability,
+            CalendarBlock.capabilities.keys.map { |c| [c.humanize, c] },
+            { include_blank: "Any capability" },
+            { class: "select select-bordered w-full" } %>
+    </div>
+
+    <div>
+      <%= form.label :block_type, class: "label text-sm font-medium" %>
+      <%= form.select :block_type,
+            CalendarBlock.block_types.keys.map { |t| [t.humanize, t] },
+            {},
+            { class: "select select-bordered w-full" } %>
+    </div>
   </div>
 
   <div>
-    <%= form.label :category_id, style: "display: block" %>
-    <%= form.text_field :category_id %>
+    <%= form.label :date, class: "label text-sm font-medium" %>
+    <%= form.date_field :date, class: "input input-bordered w-full", required: true %>
   </div>
 
-  <div>
-    <%= form.label :block_schedule_id, style: "display: block" %>
-    <%= form.text_field :block_schedule_id %>
+  <div class="grid grid-cols-2 gap-4">
+    <div>
+      <%= form.label :start_time, class: "label text-sm font-medium" %>
+      <%= form.time_field :start_time, class: "input input-bordered w-full", required: true %>
+    </div>
+
+    <div>
+      <%= form.label :end_time, class: "label text-sm font-medium" %>
+      <%= form.time_field :end_time, class: "input input-bordered w-full", required: true %>
+    </div>
   </div>
 
-  <div>
-    <%= form.label :capability, style: "display: block" %>
-    <%= form.number_field :capability %>
-  </div>
-
-  <div>
-    <%= form.label :date, style: "display: block" %>
-    <%= form.date_field :date %>
-  </div>
-
-  <div>
-    <%= form.label :start_time, style: "display: block" %>
-    <%= form.time_field :start_time %>
-  </div>
-
-  <div>
-    <%= form.label :end_time, style: "display: block" %>
-    <%= form.time_field :end_time %>
-  </div>
-
-  <div>
-    <%= form.label :block_type, style: "display: block" %>
-    <%= form.number_field :block_type %>
-  </div>
-
-  <div>
-    <%= form.label :external_uid, style: "display: block" %>
-    <%= form.text_field :external_uid %>
-  </div>
-
-  <div>
-    <%= form.submit %>
+  <div class="pt-2">
+    <%= form.submit class: "btn btn-primary w-full" %>
   </div>
 <% end %>

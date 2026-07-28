@@ -1,16 +1,30 @@
-<p style="color: green"><%= notice %></p>
-
 <% content_for :title, "Categories" %>
 
-<h1>Categories</h1>
+<div class="max-w-2xl mx-auto mt-8 px-4">
+  <div class="flex items-center justify-between mb-6">
+    <div>
+      <h1 class="text-2xl font-display font-semibold text-base-content">Categories</h1>
+      <p class="text-xs text-base-content/50 mt-1">Areas of life that allocate finite attention</p>
+    </div>
+    <%= link_to "New category", new_category_path, class: "btn btn-primary btn-sm" %>
+  </div>
 
-<div id="categories">
-  <% @categories.each do |category| %>
-    <%= render category %>
-    <p>
-      <%= link_to "Show this category", category %>
-    </p>
+  <% if notice %>
+    <div role="alert" class="alert alert-success alert-sm mb-4">
+      <span><%= notice %></span>
+    </div>
+  <% end %>
+
+  <% if @categories.any? %>
+    <div class="space-y-3">
+      <% @categories.each do |category| %>
+        <%= render category %>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="text-center py-12 border border-dashed border-base-300 rounded-xl">
+      <p class="text-base-content/60">No categories defined yet.</p>
+      <%= link_to "Create your first category", new_category_path, class: "btn btn-primary btn-sm mt-4" %>
+    </div>
   <% end %>
 </div>
-
-<%= link_to "New category", new_category_path %>

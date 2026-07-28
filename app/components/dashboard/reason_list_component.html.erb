@@ -1,0 +1,8 @@
+<ul class="space-y-2 py-1">
+  <% @reasons.each do |reason| %>
+    <li class="flex items-start gap-2 text-sm text-base-content/70">
+      <span class="text-base-content/30 mt-0.5">↓</span>
+      <span><%= reason %></span>
+    </li>
+  <% end %>
+</ul>

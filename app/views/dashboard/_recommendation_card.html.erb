@@ -1,5 +1,4 @@
-<%# The primary recommendation card — the heart of Kern's interface.
-     Shows one commitment with progressive disclosure of reasons. %>
+<%# The primary recommendation card — the heart of Kern's interface. %>
 
 <div class="card bg-base-100 border border-base-300 shadow-sm">
   <div class="card-body p-6">
@@ -13,9 +12,7 @@
       <% if recommendation.commitment.category %>
         <span class="text-sm text-base-content/60"><%= recommendation.commitment.category.name %></span>
       <% end %>
-      <% if recommendation.commitment.capability %>
-        <span class="badge badge-sm badge-outline"><%= recommendation.commitment.capability.humanize %></span>
-      <% end %>
+      <%= render Shared::CapabilityBadgeComponent.new(capability: recommendation.commitment.capability, size: :sm) %>
       <% if recommendation.commitment.estimate_minutes %>
         <span class="text-xs text-base-content/40"><%= recommendation.commitment.estimate_minutes %>min</span>
       <% end %>
@@ -28,14 +25,7 @@
         Why?
       </div>
       <div class="collapse-content px-4">
-        <ul class="space-y-2 pb-2">
-          <% recommendation.reasons.each do |reason| %>
-            <li class="flex items-start gap-2 text-sm text-base-content/70">
-              <span class="text-base-content/30 mt-0.5">↓</span>
-              <span><%= reason %></span>
-            </li>
-          <% end %>
-        </ul>
+        <%= render Dashboard::ReasonListComponent.new(reasons: recommendation.reasons) %>
       </div>
     </div>
 

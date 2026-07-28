@@ -1,12 +1,12 @@
-<% content_for :title, "Editing commitment" %>
+<% content_for :title, "Edit Commitment" %>
 
-<h1>Editing commitment</h1>
+<div class="max-w-xl mx-auto mt-8 px-4">
+  <div class="mb-6">
+    <%= link_to "← Back", @commitment, class: "text-sm text-base-content/60 hover:text-primary transition-colors" %>
+    <h1 class="text-2xl font-display font-semibold text-base-content mt-2">Editing Commitment</h1>
+  </div>
 
-<%= render "form", commitment: @commitment %>
-
-<br>
-
-<div>
-  <%= link_to "Show this commitment", @commitment %> |
-  <%= link_to "Back to commitments", commitments_path %>
+  <div class="card bg-base-100 border border-base-300 shadow-sm p-6">
+    <%= render "form", commitment: @commitment %>
+  </div>
 </div>

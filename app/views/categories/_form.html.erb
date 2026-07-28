@@ -1,52 +1,47 @@
-<%= form_with(model: category) do |form| %>
+<%= form_with(model: category, class: "space-y-4") do |form| %>
   <% if category.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(category.errors.count, "error") %> prohibited this category from being saved:</h2>
-
-      <ul>
-        <% category.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+    <div role="alert" class="alert alert-error alert-sm">
+      <div>
+        <p class="font-semibold"><%= pluralize(category.errors.count, "error") %>:</p>
+        <ul class="list-disc list-inside text-sm mt-1">
+          <% category.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
     </div>
   <% end %>
 
   <div>
-    <%= form.label :user_id, style: "display: block" %>
-    <%= form.text_field :user_id %>
+    <%= form.label :name, class: "label text-sm font-medium" %>
+    <%= form.text_field :name, class: "input input-bordered w-full", required: true, placeholder: "Category name (e.g. Work, Health)" %>
   </div>
 
   <div>
-    <%= form.label :parent_id, style: "display: block" %>
-    <%= form.text_field :parent_id %>
+    <%= form.label :parent_id, "Parent Category", class: "label text-sm font-medium" %>
+    <%= form.collection_select :parent_id, Current.user.categories.where.not(id: category.id), :id, :name,
+          { include_blank: "None (Root Category)" },
+          { class: "select select-bordered w-full" } %>
+  </div>
+
+  <div class="grid grid-cols-2 gap-4">
+    <div>
+      <%= form.label :priority, class: "label text-sm font-medium" %>
+      <%= form.number_field :priority, class: "input input-bordered w-full", min: 1, max: 10, placeholder: "1 (Highest)" %>
+    </div>
+
+    <div>
+      <%= form.label :weekly_allocation_minutes, "Weekly Allocation (minutes)", class: "label text-sm font-medium" %>
+      <%= form.number_field :weekly_allocation_minutes, class: "input input-bordered w-full", min: 0, step: 15, placeholder: "e.g. 600 for 10 hours" %>
+    </div>
   </div>
 
   <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
+    <%= form.label :description, class: "label text-sm font-medium" %>
+    <%= form.text_area :description, class: "textarea textarea-bordered w-full", rows: 3, placeholder: "Description of this area of life..." %>
   </div>
 
-  <div>
-    <%= form.label :description, style: "display: block" %>
-    <%= form.textarea :description %>
-  </div>
-
-  <div>
-    <%= form.label :priority, style: "display: block" %>
-    <%= form.number_field :priority %>
-  </div>
-
-  <div>
-    <%= form.label :weekly_allocation_minutes, style: "display: block" %>
-    <%= form.number_field :weekly_allocation_minutes %>
-  </div>
-
-  <div>
-    <%= form.label :depth, style: "display: block" %>
-    <%= form.number_field :depth %>
-  </div>
-
-  <div>
-    <%= form.submit %>
+  <div class="pt-2">
+    <%= form.submit class: "btn btn-primary w-full" %>
   </div>
 <% end %>

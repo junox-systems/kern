@@ -1,10 +1,37 @@
-<p style="color: green"><%= notice %></p>
+<% content_for :title, "Calendar Block" %>
 
-<%= render @calendar_block %>
+<div class="max-w-xl mx-auto mt-8 px-4">
+  <div class="mb-6 flex items-center justify-between">
+    <%= link_to "← Calendar Blocks", calendar_blocks_path, class: "text-sm text-base-content/60 hover:text-primary transition-colors" %>
+    <div class="flex items-center gap-2">
+      <%= link_to "Edit", edit_calendar_block_path(@calendar_block), class: "btn btn-ghost btn-xs" %>
+      <%= button_to "Delete", @calendar_block, method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "btn btn-ghost btn-xs text-error" %>
+    </div>
+  </div>
 
-<div>
-  <%= link_to "Edit this calendar block", edit_calendar_block_path(@calendar_block) %> |
-  <%= link_to "Back to calendar blocks", calendar_blocks_path %>
+  <div class="card bg-base-100 border border-base-300 shadow-sm p-6">
+    <div class="flex items-center justify-between">
+      <h1 class="text-2xl font-display font-semibold text-base-content"><%= @calendar_block.category&.name || "Uncategorized Block" %></h1>
+      <%= render Shared::CapabilityBadgeComponent.new(capability: @calendar_block.capability, size: :sm) %>
+    </div>
 
-  <%= button_to "Destroy this calendar block", @calendar_block, method: :delete %>
+    <div class="mt-6 pt-4 border-t border-base-200 grid grid-cols-2 gap-4 text-sm">
+      <div>
+        <span class="text-xs text-base-content/50 uppercase">Date</span>
+        <p class="font-medium text-base-content"><%= @calendar_block.date.strftime("%A, %b %-d, %Y") %></p>
+      </div>
+      <div>
+        <span class="text-xs text-base-content/50 uppercase">Time Window</span>
+        <p class="font-medium text-base-content"><%= @calendar_block.start_time.strftime("%H:%M") %> – <%= @calendar_block.end_time.strftime("%H:%M") %></p>
+      </div>
+      <div>
+        <span class="text-xs text-base-content/50 uppercase">Type</span>
+        <p class="font-medium text-base-content"><%= @calendar_block.block_type.humanize %></p>
+      </div>
+      <div>
+        <span class="text-xs text-base-content/50 uppercase">Calendar</span>
+        <p class="font-medium text-base-content"><%= @calendar_block.calendar.name %></p>
+      </div>
+    </div>
+  </div>
 </div>

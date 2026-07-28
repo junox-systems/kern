@@ -1,67 +1,89 @@
-<%= form_with(model: commitment) do |form| %>
-  <% if commitment.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(commitment.errors.count, "error") %> prohibited this commitment from being saved:</h2>
+<%# Quick capture bar + commitment form shared partial.
+     Uses DaisyUI components, proper dropdowns, no raw IDs. %>
 
-      <ul>
-        <% commitment.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+<%= form_with(model: commitment, class: "space-y-5") do |form| %>
+  <% if commitment.errors.any? %>
+    <div role="alert" class="alert alert-error alert-sm">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+      </svg>
+      <div>
+        <p class="font-semibold"><%= pluralize(commitment.errors.count, "error") %>:</p>
+        <ul class="list-disc list-inside text-sm mt-1">
+          <% commitment.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
     </div>
   <% end %>
 
+  <%# Title — always visible, primary field %>
   <div>
-    <%= form.label :user_id, style: "display: block" %>
-    <%= form.text_field :user_id %>
+    <%= form.label :title, class: "label text-sm font-medium" %>
+    <%= form.text_field :title, class: "input input-bordered w-full", autofocus: true, placeholder: "What needs attention?" %>
   </div>
 
+  <%# Category %>
   <div>
-    <%= form.label :category_id, style: "display: block" %>
-    <%= form.text_field :category_id %>
+    <%= form.label :category_id, "Category", class: "label text-sm font-medium" %>
+    <%= form.collection_select :category_id, Current.user.categories.order(:priority), :id, :name,
+          { include_blank: "Select category..." },
+          { class: "select select-bordered w-full" } %>
   </div>
 
-  <div>
-    <%= form.label :title, style: "display: block" %>
-    <%= form.text_field :title %>
+  <div class="grid grid-cols-2 gap-4">
+    <%# Capability %>
+    <div>
+      <%= form.label :capability, class: "label text-sm font-medium" %>
+      <%= form.select :capability,
+            Commitment.capabilities.keys.map { |c| [c.humanize, c] },
+            { include_blank: "Any" },
+            { class: "select select-bordered w-full" } %>
+    </div>
+
+    <%# Estimate %>
+    <div>
+      <%= form.label :estimate_minutes, "Estimate", class: "label text-sm font-medium" %>
+      <div class="join w-full">
+        <%= form.number_field :estimate_minutes, class: "input input-bordered join-item w-full", min: 5, step: 5, placeholder: "min" %>
+        <span class="join-item flex items-center px-3 bg-base-200 text-sm text-base-content/50">min</span>
+      </div>
+    </div>
   </div>
 
-  <div>
-    <%= form.label :description, style: "display: block" %>
-    <%= form.textarea :description %>
+  <div class="grid grid-cols-2 gap-4">
+    <%# Due date %>
+    <div>
+      <%= form.label :due_at, "Due date", class: "label text-sm font-medium" %>
+      <%= form.datetime_local_field :due_at, class: "input input-bordered w-full" %>
+    </div>
+
+    <%# Available after (defer) %>
+    <div>
+      <%= form.label :available_after, "Available after", class: "label text-sm font-medium" %>
+      <%= form.datetime_local_field :available_after, class: "input input-bordered w-full" %>
+    </div>
   </div>
 
+  <%# Description %>
   <div>
-    <%= form.label :context, style: "display: block" %>
-    <%= form.textarea :context %>
+    <%= form.label :description, class: "label text-sm font-medium" %>
+    <%= form.text_area :description, class: "textarea textarea-bordered w-full", rows: 2, placeholder: "What is this about?" %>
   </div>
 
-  <div>
-    <%= form.label :capability, style: "display: block" %>
-    <%= form.number_field :capability %>
+  <%# Context — collapsible, since it's secondary %>
+  <div class="collapse collapse-arrow bg-base-200/30 rounded-lg">
+    <input type="checkbox" />
+    <div class="collapse-title text-sm text-base-content/50 py-3 min-h-0">
+      Context notes
+    </div>
+    <div class="collapse-content">
+      <%= form.text_area :context, class: "textarea textarea-bordered w-full", rows: 3, placeholder: "Anything to remember..." %>
+    </div>
   </div>
 
-  <div>
-    <%= form.label :estimate_minutes, style: "display: block" %>
-    <%= form.number_field :estimate_minutes %>
-  </div>
-
-  <div>
-    <%= form.label :due_at, style: "display: block" %>
-    <%= form.datetime_field :due_at %>
-  </div>
-
-  <div>
-    <%= form.label :available_after, style: "display: block" %>
-    <%= form.datetime_field :available_after %>
-  </div>
-
-  <div>
-    <%= form.label :state, style: "display: block" %>
-    <%= form.number_field :state %>
-  </div>
-
-  <div>
-    <%= form.submit %>
+  <div class="pt-2">
+    <%= form.submit class: "btn btn-primary w-full" %>
   </div>
 <% end %>

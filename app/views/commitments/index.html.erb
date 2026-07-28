@@ -1,16 +1,27 @@
-<p style="color: green"><%= notice %></p>
-
 <% content_for :title, "Commitments" %>
 
-<h1>Commitments</h1>
+<div class="max-w-2xl mx-auto mt-8 px-4">
+  <div class="flex items-center justify-between mb-6">
+    <h1 class="text-2xl font-display font-semibold text-base-content">Commitments</h1>
+    <%= link_to "New commitment", new_commitment_path, class: "btn btn-primary btn-sm" %>
+  </div>
 
-<div id="commitments">
-  <% @commitments.each do |commitment| %>
-    <%= render commitment %>
-    <p>
-      <%= link_to "Show this commitment", commitment %>
-    </p>
+  <% if notice %>
+    <div role="alert" class="alert alert-success alert-sm mb-4">
+      <span><%= notice %></span>
+    </div>
+  <% end %>
+
+  <% if @commitments.any? %>
+    <div class="bg-base-100 border border-base-300 rounded-xl shadow-sm divide-y divide-base-200">
+      <% @commitments.each do |commitment| %>
+        <%= render commitment %>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="text-center py-12 border border-dashed border-base-300 rounded-xl">
+      <p class="text-base-content/60">No commitments found.</p>
+      <%= link_to "Create your first commitment", new_commitment_path, class: "btn btn-primary btn-sm mt-4" %>
+    </div>
   <% end %>
 </div>
-
-<%= link_to "New commitment", new_commitment_path %>

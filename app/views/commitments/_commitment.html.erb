@@ -1,52 +1,25 @@
-<div id="<%= dom_id commitment %>">
-  <div>
-    <strong>User:</strong>
-    <%= commitment.user_id %>
-  </div>
+<%# Commitment partial — used in index listing.
+     Shows title, state badge, category, capability, and due date. %>
 
-  <div>
-    <strong>Category:</strong>
-    <%= commitment.category_id %>
+<div id="<%= dom_id commitment %>" class="flex items-center justify-between py-3 px-4 rounded-lg hover:bg-base-200/50 transition-colors border-b border-base-200 last:border-0">
+  <div class="flex-1 min-w-0">
+    <div class="flex items-center gap-2">
+      <%= link_to commitment.title, commitment, class: "text-sm font-medium text-base-content hover:text-primary transition-colors truncate" %>
+      <span class="badge badge-xs <%= state_badge_class(commitment.state) %>"><%= commitment.state.humanize %></span>
+    </div>
+    <div class="flex items-center gap-2 mt-1">
+      <% if commitment.category %>
+        <span class="text-xs text-base-content/50"><%= commitment.category.name %></span>
+      <% end %>
+      <% if commitment.capability %>
+        <span class="badge badge-xs badge-ghost"><%= commitment.capability.humanize %></span>
+      <% end %>
+      <% if commitment.due_at %>
+        <span class="text-xs text-base-content/40"><%= human_due_date(commitment.due_at) %></span>
+      <% end %>
+    </div>
   </div>
-
-  <div>
-    <strong>Title:</strong>
-    <%= commitment.title %>
-  </div>
-
-  <div>
-    <strong>Description:</strong>
-    <%= commitment.description %>
-  </div>
-
-  <div>
-    <strong>Context:</strong>
-    <%= commitment.context %>
-  </div>
-
-  <div>
-    <strong>Capability:</strong>
-    <%= commitment.capability %>
-  </div>
-
-  <div>
-    <strong>Estimate minutes:</strong>
-    <%= commitment.estimate_minutes %>
-  </div>
-
-  <div>
-    <strong>Due at:</strong>
-    <%= commitment.due_at %>
-  </div>
-
-  <div>
-    <strong>Available after:</strong>
-    <%= commitment.available_after %>
-  </div>
-
-  <div>
-    <strong>State:</strong>
-    <%= commitment.state %>
-  </div>
-
+  <% if commitment.estimate_minutes %>
+    <span class="text-xs text-base-content/30 ml-4"><%= commitment.estimate_minutes %>m</span>
+  <% end %>
 </div>
